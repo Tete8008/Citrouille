@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [System.NonSerialized] public TowerProperties towerProperties;
+    public TowerProperties towerProperties;
     public Transform self;
     public MeshRenderer meshRenderer;
     public MeshFilter meshFilter;
@@ -17,9 +17,4 @@ public class TowerBehaviour : MonoBehaviour
         meshFilter.mesh = towerProperties.mesh;
         meshRenderer.material = towerProperties.material;
     }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 }

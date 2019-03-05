@@ -34,6 +34,12 @@ public class MapGenerator : EditorWindow
         
     }
 
+    private void OnDisable()
+    {
+        DestroyImmediate(map);
+        DestroyImmediate(camera.gameObject);
+    }
+
 
     private void OnGUI()
     {
@@ -117,7 +123,7 @@ public class MapGenerator : EditorWindow
 
         selectedTowerProperties = EditorGUILayout.ObjectField(selectedTowerProperties,typeof(TowerProperties),false) as TowerProperties;
 
-        if (GUILayout.Button("Add tower of this ← type "))
+        if (GUILayout.Button("Add tower of this ← type ") && selectedTowerProperties!=null)
         {
             GameObject towerObject = Instantiate(towerPrefab);
             towerObject.transform.SetParent(map.transform);
