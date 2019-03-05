@@ -9,12 +9,17 @@ public class MapManager : MonoBehaviour
     public GameObject towerPrefab;
     public GameObject ballLauncherPrefab;
     public GameObject groundPrefab;
+    public GameObject borderPrefab;
     private GameObject map;
     [System.NonSerialized]public Camera cam;
 
     private List<TowerBehaviour> towers;
     private BallLauncher ballLauncher;
     private GameObject ground;
+    private GameObject rightBorder;
+    private GameObject leftBorder;
+    private GameObject topBorder;
+    private GameObject bottomBorder;
 
     private void Awake()
     {
@@ -59,5 +64,19 @@ public class MapManager : MonoBehaviour
         instance.ground = Instantiate(instance.groundPrefab);
         instance.ground.transform.position = mapProperties.groundPosition;
         instance.ground.transform.rotation = mapProperties.groundRotation;
+
+        instance.rightBorder = Instantiate(instance.borderPrefab);
+        instance.leftBorder = Instantiate(instance.borderPrefab);
+        instance.topBorder = Instantiate(instance.borderPrefab);
+        instance.bottomBorder = Instantiate(instance.borderPrefab);
+
+        instance.rightBorder.transform.position = mapProperties.borderPositions[0];
+        instance.leftBorder.transform.position = mapProperties.borderPositions[1];
+        instance.topBorder.transform.position = mapProperties.borderPositions[2];
+        instance.bottomBorder.transform.position = mapProperties.borderPositions[3];
+        instance.rightBorder.transform.rotation = mapProperties.borderRotations[0];
+        instance.leftBorder.transform.rotation = mapProperties.borderRotations[1];
+        instance.topBorder.transform.rotation = mapProperties.borderRotations[2];
+        instance.bottomBorder.transform.rotation = mapProperties.borderRotations[3];
     }
 }

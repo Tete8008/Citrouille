@@ -13,6 +13,8 @@ public class MapProperties : ScriptableObject
     public Quaternion launcherRotation;
     public Vector3 groundPosition;
     public Quaternion groundRotation;
+    public List<Vector3> borderPositions;
+    public List<Quaternion> borderRotations;
     public float levelWidth;
     public float levelDepth;
 }

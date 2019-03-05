@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 292f20f815d91cf4cb2adeab23f4be48, type: 3}
   m_Name: TowerTest
   m_EditorClassIdentifier: 
-  blocCount: 3
+  blocCount: 6
   healthPerBloc: 1
   towerStructure: 0
   blocPattern:
   - {fileID: 11400000, guid: cc3a7e549b06a8542ac4a68814c30c27, type: 2}
-  - {fileID: 11400000, guid: cc3a7e549b06a8542ac4a68814c30c27, type: 2}
+  - {fileID: 11400000, guid: caa6d8cbfbb302144be0aaa49eda9bf1, type: 2}

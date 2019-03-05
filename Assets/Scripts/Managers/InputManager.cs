@@ -36,6 +36,11 @@ public class InputManager : MonoBehaviour
         {
             BallLauncher.Rotate(Input.mousePosition);
         }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            BallLauncher.instance.LockAndShoot();
+        }
         
     }
 }

@@ -12,6 +12,7 @@ public class TowerBloc : MonoBehaviour
     public Transform self;
     [System.NonSerialized] public TowerBehaviour tower;
     [System.NonSerialized] public int blocIndex;
+    [System.NonSerialized] public bool invincible;
 
 
     public void Init(BlocProperties blocProperties,TowerBehaviour tower,int index)
@@ -30,6 +31,7 @@ public class TowerBloc : MonoBehaviour
     private void TakeDamage(int value)
     {
         currentHealth -= value;
+        BallLauncher.instance.IncreaseDamageDone(value);
         if (currentHealth <= 0)
         {
             Debug.Log("Bloc destroyed");
@@ -43,6 +45,7 @@ public class TowerBloc : MonoBehaviour
         blocDestructionSFX.Play();
         meshRenderer.enabled = false;
         meshCollider.enabled = false;
+        tower.ToggleBlocsInvincibility(true);
         yield return new WaitForSeconds(0.5f);
         tower.RemoveBloc(this);
         Destroy(gameObject); 
@@ -51,7 +54,7 @@ public class TowerBloc : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Ball"))
+        if (collision.collider.CompareTag("Ball") && !invincible)
         {
             TakeDamage(collision.collider.GetComponentInParent<BallBehaviour>().ballDamage);
         }

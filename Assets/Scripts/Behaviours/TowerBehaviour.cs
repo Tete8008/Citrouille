@@ -9,6 +9,7 @@ public class TowerBehaviour : MonoBehaviour
     public ParticleSystem towerDestructionSFX;
 
     public GameObject towerBlocPrefab;
+    public CapsuleCollider capsuleCollider;
 
     //private int currentHealth;
 
@@ -48,6 +49,7 @@ public class TowerBehaviour : MonoBehaviour
                 }
                 break;
         }
+        capsuleCollider.enabled = false;
     }
 
 
@@ -94,16 +96,18 @@ public class TowerBehaviour : MonoBehaviour
                 blocs[i].self.position = new Vector3(blocs[i].self.position.x, --blocs[i].blocIndex*blocs[i].self.localScale.y, blocs[i].self.position.z);
             }
             falling = false;
-            ToggleBlocColliders(true);
+            ToggleBlocsInvincibility(false);
         }
     }
 
 
-    public void ToggleBlocColliders(bool on)
+    public void ToggleBlocsInvincibility(bool on)
     {
         for (int i = 0; i < blocs.Count; i++)
         {
-            blocs[i].meshCollider.enabled = on;
+            blocs[i].invincible = on;
         }
+        capsuleCollider.enabled = on;
+
     }
 }

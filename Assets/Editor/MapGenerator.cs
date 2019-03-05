@@ -25,6 +25,13 @@ public class MapGenerator : EditorWindow
     private GameObject groundPrefab;
     private GameObject ground;
 
+    private GameObject rightBorder;
+    private GameObject leftBorder;
+    private GameObject topBorder;
+    private GameObject bottomBorder;
+
+    private GameObject borderPrefab;
+
     [MenuItem("Citrouille/MapGenerator")]
     static void Init()
     {
@@ -39,10 +46,12 @@ public class MapGenerator : EditorWindow
         launcherPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/BallLauncher.prefab",typeof(GameObject))as GameObject;
         towerPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TowerPrefab.prefab", typeof(GameObject)) as GameObject;
         groundPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/GroundPrefab.prefab", typeof(GameObject)) as GameObject;
+        borderPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Border.prefab", typeof(GameObject)) as GameObject;
 
         if (launcherPrefab == null) { Debug.LogWarning("Launcher prefab not found"); }
         if (towerPrefab == null) { Debug.LogWarning("Tower prefab not found"); }
         if (groundPrefab == null) { Debug.LogWarning("Ground prefab not found"); }
+        if (borderPrefab == null) { Debug.LogWarning("Border prefab not found"); }
     }
 
     
@@ -53,12 +62,45 @@ public class MapGenerator : EditorWindow
         DestroyImmediate(camera.gameObject);
         DestroyImmediate(ballLauncher.gameObject);
         DestroyImmediate(ground);
+        DestroyImmediate(rightBorder);
+        DestroyImmediate(leftBorder);
+        DestroyImmediate(topBorder);
+        DestroyImmediate(bottomBorder);
     }
 
 
     private void OnGUI()
     {
         scrollPos=EditorGUILayout.BeginScrollView(scrollPos);
+
+        if (rightBorder == null)
+        {
+            rightBorder = Instantiate(borderPrefab);
+            rightBorder.name = "RightBorder";
+            rightBorder.transform.position = Vector3.zero;
+        }
+
+        if (leftBorder == null)
+        {
+            leftBorder = Instantiate(borderPrefab);
+            leftBorder.name = "LeftBorder";
+            leftBorder.transform.position = Vector3.zero;
+        }
+
+        if (topBorder == null)
+        {
+            topBorder = Instantiate(borderPrefab);
+            topBorder.name = "TopBorder";
+            topBorder.transform.position = Vector3.zero;
+        }
+
+        if (bottomBorder == null)
+        {
+            bottomBorder = Instantiate(borderPrefab);
+            bottomBorder.name = "BottomBorder";
+            bottomBorder.transform.position = Vector3.zero;
+        }
+
         if (renderTexture == null)
         {
             renderTexture = new RenderTexture(500, 500, 500);
@@ -229,6 +271,22 @@ public class MapGenerator : EditorWindow
             mapProperties.groundPosition = ground.transform.position;
             mapProperties.groundRotation = ground.transform.rotation;
 
+            mapProperties.borderPositions = new List<Vector3>()
+            {
+                rightBorder.transform.position,
+                leftBorder.transform.position,
+                topBorder.transform.position,
+                bottomBorder.transform.position
+            };
+
+            mapProperties.borderRotations = new List<Quaternion>()
+            {
+                rightBorder.transform.rotation,
+                leftBorder.transform.rotation,
+                topBorder.transform.rotation,
+                bottomBorder.transform.rotation
+            };
+
             //todo mapProperties.levelWidth et mapProperties.levelDepth
             
         }
@@ -262,7 +320,14 @@ public class MapGenerator : EditorWindow
         ballLauncher.transform.rotation = mapProperties.launcherRotation;
         ground.transform.position = mapProperties.groundPosition;
         ground.transform.rotation = mapProperties.groundRotation;
-
+        rightBorder.transform.position = mapProperties.borderPositions[0];
+        leftBorder.transform.position = mapProperties.borderPositions[1];
+        topBorder.transform.position = mapProperties.borderPositions[2];
+        bottomBorder.transform.position = mapProperties.borderPositions[3];
+        rightBorder.transform.rotation = mapProperties.borderRotations[0];
+        leftBorder.transform.rotation = mapProperties.borderRotations[1];
+        topBorder.transform.rotation = mapProperties.borderRotations[2];
+        bottomBorder.transform.rotation = mapProperties.borderRotations[3];
 
 
         towerPreviews = new List<TowerBehaviour>();

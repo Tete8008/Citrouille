@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5005703762495499264}
   - component: {fileID: 5544978814767127541}
   - component: {fileID: 4115197582481002708}
+  - component: {fileID: 2724484873257970952}
   m_Layer: 0
   m_Name: TowerPrefab
   m_TagString: Untagged
@@ -50,7 +51,8 @@ MonoBehaviour:
   towerDestructionSFX: {fileID: 4115197582481002708}
   towerBlocPrefab: {fileID: 1806972134294974090, guid: ff6c6746321c34c41a355fddae796480,
     type: 3}
-  fallDuration: 0.5
+  capsuleCollider: {fileID: 2724484873257970952}
+  fallDuration: 0.05
 --- !u!199 &5544978814767127541
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4775,3 +4777,17 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!136 &2724484873257970952
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5005703762495499261}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.25
+  m_Height: 10
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6837403280336713791}
   - component: {fileID: 6837403280336713784}
   - component: {fileID: 6837403280336713785}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 6837403281067146399}
   - component: {fileID: 6837403281067146392}
   - component: {fileID: 6837403281067146393}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigid: {fileID: 6837403281067146393}
   ballDamage: 1
+  resistance: 5
 --- !u!54 &6837403281067146393
 Rigidbody:
   m_ObjectHideFlags: 0

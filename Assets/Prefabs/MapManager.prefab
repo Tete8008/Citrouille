@@ -49,3 +49,5 @@ MonoBehaviour:
     type: 3}
   groundPrefab: {fileID: 6418900824069090172, guid: c9e0fbcd118837a4e8b13c40a56cf80e,
     type: 3}
+  borderPrefab: {fileID: 8919904995883305668, guid: 8536793feaa502a4387956b34ad66b67,
+    type: 3}
