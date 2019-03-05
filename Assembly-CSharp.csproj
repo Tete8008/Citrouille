@@ -63,7 +63,10 @@
     <Compile Include="Assets\Scripts\Behaviours\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\TowerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Data\MapProperties.cs" />
+<<<<<<< HEAD
+=======
     <Compile Include="Assets\Scripts\Data\TowerData.cs" />
+>>>>>>> master
     <Compile Include="Assets\Scripts\Data\TowerProperties.cs" />
     <Compile Include="Assets\Scripts\Managers\BallManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
@@ -71,6 +74,21 @@
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
+<<<<<<< HEAD
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.CollabProxy.Editor">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+=======
       <HintPath>C:/Users/Tété/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
@@ -84,6 +102,7 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/Tété/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -287,6 +306,15 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.6f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
+<<<<<<< HEAD
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+=======
       <HintPath>C:/Users/Tété/Documents/Citrouille/Citrouille/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
@@ -294,6 +322,7 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/Tété/Documents/Citrouille/Citrouille/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.6f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
