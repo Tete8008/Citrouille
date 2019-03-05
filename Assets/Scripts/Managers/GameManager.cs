@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public GameObject canvasPrefab;
+    public GameObject mapManagerPrefab;
+
+    [Header("Map")]
+    public MapProperties mapProperties;
 
 
 
@@ -26,6 +30,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
 
     public static void Init()
     {
@@ -40,7 +49,14 @@ public class GameManager : MonoBehaviour
         uimanager.AddComponent<UIManager>();
         UIManager.instance.canvasPrefab = instance.canvasPrefab;
 
+        GameObject mapManager = Instantiate(instance.mapManagerPrefab);
+        mapManager.transform.SetParent(self);
 
+
+        GameObject inputManager = new GameObject();
+        inputManager.name = "InputManager";
+        inputManager.transform.SetParent(self);
+        inputManager.AddComponent<InputManager>();
 
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -55,7 +71,7 @@ public class GameManager : MonoBehaviour
         //si on charge le game <=> si on charge le jeu pour la première fois
         if (arg0.name == "Game")
         {
-            MapManager.GenerateMap();
+            MapManager.GenerateMap(instance.mapProperties);
         }
     }
 }

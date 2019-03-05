@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static BallManager instance = null;
+
+    public float fireRate = 1;
+    public float ballVelocity = 1;
+    public float maxAngle;
+
+    public GameObject ballLauncherPrefab;
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+    public static void SpawnLauncher()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    
+
+    
+
 }

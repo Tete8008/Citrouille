@@ -60,6 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\NiceVibrations\Common\Scripts\MMVibrationManager.cs" />
+    <Compile Include="Assets\NiceVibrations\Demo\Scripts\NiceVibrationsDemoManager.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\BallBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\BallLauncher.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\TowerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Data\MapProperties.cs" />
@@ -67,9 +71,14 @@
     <Compile Include="Assets\Scripts\Data\TowerProperties.cs" />
     <Compile Include="Assets\Scripts\Managers\BallManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Scripts\Managers\MapManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
+    <None Include="Assets\NiceVibrations\license.txt" />
+    <None Include="Assets\NiceVibrations\readme.txt" />
+    <None Include="Assets\NiceVibrations\Demo\Fonts\Lato\OFL.txt" />
+    <None Include="Assets\NiceVibrations\Common\Plugins\Android\AndroidManifest.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/t.candelier/Documents/Citrouille/Citrouille/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

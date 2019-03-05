@@ -12,6 +12,7 @@ public class MapGenerator : EditorWindow
     private TowerProperties selectedTowerProperties;
 
     private GameObject towerPrefab;
+    private GameObject launcherPrefab;
 
     private List<TowerBehaviour> towerPreviews;
     private int previewsCount;
@@ -19,6 +20,10 @@ public class MapGenerator : EditorWindow
     private RenderTexture renderTexture;
     private Camera camera;
     private Vector2 scrollPos;
+
+    private GameObject ballLauncher;
+    private GameObject groundPrefab;
+    private GameObject ground;
 
     [MenuItem("Citrouille/MapGenerator")]
     static void Init()
@@ -31,13 +36,23 @@ public class MapGenerator : EditorWindow
 
     private void OnEnable()
     {
-        
+        launcherPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/BallLauncher.prefab",typeof(GameObject))as GameObject;
+        towerPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TowerPrefab.prefab", typeof(GameObject)) as GameObject;
+        groundPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/GroundPrefab.prefab", typeof(GameObject)) as GameObject;
+
+        if (launcherPrefab == null) { Debug.LogWarning("Launcher prefab not found"); }
+        if (towerPrefab == null) { Debug.LogWarning("Tower prefab not found"); }
+        if (groundPrefab == null) { Debug.LogWarning("Ground prefab not found"); }
     }
+
+    
 
     private void OnDisable()
     {
         DestroyImmediate(map);
         DestroyImmediate(camera.gameObject);
+        DestroyImmediate(ballLauncher.gameObject);
+        DestroyImmediate(ground);
     }
 
 
@@ -47,6 +62,20 @@ public class MapGenerator : EditorWindow
         if (renderTexture == null)
         {
             renderTexture = new RenderTexture(500, 500, 500);
+        }
+
+        if (ground == null)
+        {
+            ground = Instantiate(groundPrefab);
+            ground.transform.position = Vector3.zero;
+            ground.name = "Ground";
+        }
+
+        if (ballLauncher == null)
+        {
+            ballLauncher = Instantiate(launcherPrefab);
+            ballLauncher.transform.position = Vector3.zero;
+            ballLauncher.name = "BallLauncher";
         }
 
         if (map == null)
@@ -117,7 +146,9 @@ public class MapGenerator : EditorWindow
             RefreshMap();
         }
 
-        towerPrefab=EditorGUILayout.ObjectField("TowerPrefab", towerPrefab, typeof(GameObject), false) as GameObject;
+        /*towerPrefab=EditorGUILayout.ObjectField("TowerPrefab", towerPrefab, typeof(GameObject), false) as GameObject;
+
+        launcherPrefab = EditorGUILayout.ObjectField("Launcher prefab", launcherPrefab, typeof(GameObject), false) as GameObject;*/
 
         EditorGUILayout.BeginHorizontal();
 
@@ -192,6 +223,12 @@ public class MapGenerator : EditorWindow
             }
             mapProperties.cameraPosition = camera.transform.position;
             mapProperties.cameraRotation = camera.transform.rotation;
+            mapProperties.launcherPosition = ballLauncher.transform.position;
+            mapProperties.launcherRotation = ballLauncher.transform.rotation;
+
+            mapProperties.groundPosition = ground.transform.position;
+            mapProperties.groundRotation = ground.transform.rotation;
+
             //todo mapProperties.levelWidth et mapProperties.levelDepth
             
         }
@@ -211,12 +248,23 @@ public class MapGenerator : EditorWindow
         DestroyImmediate(map);
         map = new GameObject();
         map.name = "Map";
-        DestroyImmediate(camera);
+        DestroyImmediate(camera.gameObject);
         GameObject cameraObject = new GameObject();
         cameraObject.AddComponent<Camera>();
+        cameraObject.transform.position = mapProperties.cameraPosition;
+        cameraObject.transform.rotation = mapProperties.cameraRotation;
         camera = cameraObject.GetComponent<Camera>();
         camera.targetTexture = renderTexture;
         camera.name = "CAMERA";
+        DestroyImmediate(ballLauncher.gameObject);
+        ballLauncher = Instantiate(launcherPrefab);
+        ballLauncher.transform.position = mapProperties.launcherPosition;
+        ballLauncher.transform.rotation = mapProperties.launcherRotation;
+        ground.transform.position = mapProperties.groundPosition;
+        ground.transform.rotation = mapProperties.groundRotation;
+
+
+
         towerPreviews = new List<TowerBehaviour>();
         if (mapProperties != null)
         {
