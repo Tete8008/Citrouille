@@ -34,6 +34,7 @@ public class BallLauncher : MonoBehaviour
     {
         timeLeftBeforeNextShoot = 1 / fireRate;
         initialRotation = transform.eulerAngles;
+        print("initial rotation : " + initialRotation);
     }
 
 
@@ -62,25 +63,26 @@ public class BallLauncher : MonoBehaviour
     public static void Rotate(Vector2 mousePosition)
     {
         Ray ray = MapManager.instance.cam.ScreenPointToRay(mousePosition);
-        //Gizmos.DrawSphere()
         
-        if (Physics.Raycast(ray, out RaycastHit hit,99999,9))
+        
+        if (Physics.Raycast(ray, out RaycastHit hit,99999,LayerMask.GetMask("Ground")))
         {
-            Vector3 direction = (hit.transform.position- instance.transform.position).normalized ;
+            Vector3 direction = (hit.point- instance.transform.position).normalized ;
             Vector3 rotation = Vector3.RotateTowards(instance.transform.forward, direction, 2 * Mathf.PI, 0f);
             instance.transform.rotation = Quaternion.LookRotation(rotation);
         }
-            
-        //instance.transform.eulerAngles= new Vector3(instance.initialRotation.x, instance.initialRotation.y, instance.initialRotation.z);
 
-        if (instance.transform.eulerAngles.y < instance.initialRotation.y - instance.maxAngle / 2)
-        {
-            instance.transform.eulerAngles = new Vector3(instance.initialRotation.x, instance.initialRotation.y - instance.maxAngle / 2, instance.initialRotation.z);
-        }
-        if (instance.transform.eulerAngles.y > instance.initialRotation.y + instance.maxAngle / 2)
+        //instance.transform.eulerAngles= new Vector3(instance.initialRotation.x, instance.initialRotation.y, instance.initialRotation.z);
+        
+        if (instance.transform.eulerAngles.y>instance.initialRotation.y + instance.maxAngle / 2 && instance.transform.eulerAngles.y<180)
         {
             instance.transform.eulerAngles = new Vector3(instance.initialRotation.x, instance.initialRotation.y + instance.maxAngle / 2, instance.initialRotation.z);
         }
+        if (instance.transform.eulerAngles.y >180 && instance.transform.eulerAngles.y<360+instance.initialRotation.y-instance.maxAngle/2 )
+        {
+            instance.transform.eulerAngles = new Vector3(instance.initialRotation.x, instance.initialRotation.y - instance.maxAngle / 2, instance.initialRotation.z);
+        }
+        print(instance.transform.eulerAngles.y);
     }
 
 

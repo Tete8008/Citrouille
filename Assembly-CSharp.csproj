@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\Behaviours\BallLauncher.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\TowerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\TowerBloc.cs" />
+    <Compile Include="Assets\Scripts\Data\BlocProperties.cs" />
     <Compile Include="Assets\Scripts\Data\MapProperties.cs" />
     <Compile Include="Assets\Scripts\Data\TowerData.cs" />
     <Compile Include="Assets\Scripts\Data\TowerProperties.cs" />

@@ -5,5 +5,5 @@ using UnityEngine;
 public class BallBehaviour : MonoBehaviour
 {
     public Rigidbody rigid;
-    
+    public int ballDamage=1;
 }

@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 1
-  ballVelocity: 5
+  ballVelocity: 10.22
   ballPrefab: {fileID: 6837403281067146394, guid: e04c67291bef7ed4eab7265dde1ab936,
     type: 3}
-  maxAngle: 60
+  maxAngle: 120
   spawnPoint: {fileID: 2652851063753129729}
