@@ -18,4 +18,8 @@ public class TowerBehaviour : MonoBehaviour
         meshRenderer.material = towerProperties.material;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 }

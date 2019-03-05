@@ -12,7 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b457342f61702cf408fc8c3bf28668d1, type: 3}
   m_Name: NewMapProperties 1
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   towers: []
   cameraTransform: {fileID: 0}
+=======
+  towers:
+  - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
+    position: {x: -4.1, y: 0, z: -0.9}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  - towerProperties: {fileID: 0}
+    position: {x: -2, y: 0, z: -5.6}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  - towerProperties: {fileID: 0}
+    position: {x: 0.89, y: 0, z: -4.08}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  - towerProperties: {fileID: 0}
+    position: {x: -6.3, y: 0, z: -5.8}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  cameraPosition: {x: 5.37, y: 10.94, z: 3.04}
+  cameraRotation: {x: 0.16257952, y: -0.8209221, z: 0.34377062, w: 0.42600077}
+>>>>>>> master
   levelWidth: 0
   levelDepth: 0

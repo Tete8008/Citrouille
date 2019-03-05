@@ -15,8 +15,11 @@ public class UIManager : MonoBehaviour
     public MenuBehaviour menu;
     private GameObject activePanel;
 
+<<<<<<< HEAD
     private bool gameoverPanelActive;
 
+=======
+>>>>>>> master
 
     private void Awake()
     {
@@ -89,7 +92,10 @@ public class UIManager : MonoBehaviour
 
     public static void DisplayGameoverScreen()
     {
+<<<<<<< HEAD
         instance.gameoverPanelActive = true;
+=======
+>>>>>>> master
         instance.menu.gameoverPanel.SetActive(true);
     }
 }
