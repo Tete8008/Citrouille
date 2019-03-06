@@ -15,6 +15,8 @@ public class BallBehaviour : MonoBehaviour
 
     public bool overPowered=false;
 
+    [System.NonSerialized] public int salveIndex;
+
     private void Start()
     {
         timeLeftToLive = timeToLive;

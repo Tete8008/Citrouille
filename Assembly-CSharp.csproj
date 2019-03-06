@@ -60,15 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MapGrid.cs" />
     <Compile Include="Assets\NiceVibrations\Common\Scripts\MMVibrationManager.cs" />
     <Compile Include="Assets\NiceVibrations\Demo\Scripts\NiceVibrationsDemoManager.cs" />
     <Compile Include="Assets\Scripts\Behaviours\BallBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\BallLauncher.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\Chunk.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Behaviours\TowerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\TowerBloc.cs" />
     <Compile Include="Assets\Scripts\Data\BlocProperties.cs" />
+    <Compile Include="Assets\Scripts\Data\ChunkProperties.cs" />
     <Compile Include="Assets\Scripts\Data\MapProperties.cs" />
     <Compile Include="Assets\Scripts\Data\ObstacleData.cs" />
     <Compile Include="Assets\Scripts\Data\ObstacleProperties.cs" />

@@ -9,7 +9,7 @@ public class Obstacle : MonoBehaviour
     public MeshFilter meshFilter;
     public Collider meshCollider;
     public Transform self;
-    [System.NonSerialized] public ObstacleProperties obstacleProperties;
+    public ObstacleProperties obstacleProperties;
 
     public void Init(ObstacleProperties obstacleProperties)
     {

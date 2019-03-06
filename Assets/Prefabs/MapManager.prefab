@@ -53,3 +53,8 @@ MonoBehaviour:
     type: 3}
   obstaclePrefab: {fileID: 2060501891636385188, guid: f8ddebda248c86249b64ff4eb7affca9,
     type: 3}
+  gridPrefab: {fileID: 0}
+  chunkPrefabs:
+  - {fileID: 3214103009409628230, guid: 0bda529934f2cf447aa157512bf7f976, type: 3}
+  - {fileID: 3214103009409628230, guid: d074d450b5caa82418af61ee3adf5cdc, type: 3}
+  gridScale: 1

@@ -22,7 +22,7 @@ public class BallLauncher : MonoBehaviour
 
     private Vector3 initialRotation;
     private int ballsLeft;
-    private int bonusBalls;
+    private float bonusBalls;
     private int damageDone;
 
     private List<BallBehaviour> balls;
@@ -31,6 +31,9 @@ public class BallLauncher : MonoBehaviour
     
 
     [System.NonSerialized] public bool aiming;
+    [System.NonSerialized] public int currentSalveIndex;
+    [System.NonSerialized] public bool outOfSalves;
+
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class BallLauncher : MonoBehaviour
     private void Start()
     {
         aiming = true;
+        currentSalveIndex = 1;
         bonusBalls = 0;
         initialRotation = transform.eulerAngles;
         balls = new List<BallBehaviour>();
@@ -54,24 +58,22 @@ public class BallLauncher : MonoBehaviour
 
     public void LockAndShoot()
     {
-        if (instance.aiming)
+        if (aiming && outOfSalves==false)
         {
             aiming = false;
-            ballsLeft = ballsPerSalve + bonusBalls;
+            ballsLeft = ballsPerSalve + (int)bonusBalls;
+            bonusBalls = 0;
             timeLeftBeforeNextShoot = 1 / fireRate;
         }
-        
     }
 
 
     public void RemoveBall(BallBehaviour ball)
     {
         balls.Remove(ball);
-        if (balls.Count <= 0)
+        if (balls.Count <= 0 && outOfSalves)
         {
-            aiming = true;
-            bonusBalls = (int)(damageDone * bonusBallPerDamageDealt);
-            damageDone = 0;
+            Debug.Log("YOU LOSE");
         }
     }
 
@@ -90,7 +92,7 @@ public class BallLauncher : MonoBehaviour
     {
         if (!instance.aiming)
         {
-            if (ballsLeft > 0)
+            if (ballsLeft  > 0)
             {
                 timeLeftBeforeNextShoot -= Time.deltaTime;
                 if (timeLeftBeforeNextShoot <= 0)
@@ -103,19 +105,29 @@ public class BallLauncher : MonoBehaviour
             {
                 /*aiming = true;
                 bonusBalls = (int)(damageDone * bonusBallPerDamageDealt);*/
+                aiming = true;
+
+                if (currentSalveIndex < 3)
+                {
+                    currentSalveIndex++;
+                }
+                else
+                {
+                    outOfSalves = true;
+                }
             }
         }
         else
         {
             if (bonusBalls > 0)
             {
-                timeLeftBeforeNextBonusDecrease -= Time.deltaTime;
-                if (timeLeftBeforeNextBonusDecrease <= 0)
-                {
-                    bonusBalls--;
-                    timeLeftBeforeNextBonusDecrease += 1 / bonusDecreaseRate;
-                }
-            }   
+                bonusBalls -= Time.deltaTime * bonusDecreaseRate;
+            }
+            else
+            {
+                bonusBalls = 0;
+            }
+            
         }
     }
 
@@ -129,10 +141,7 @@ public class BallLauncher : MonoBehaviour
             {
                 Vector3 direction = (hit.point - instance.transform.position).normalized;
                 Vector3 rotation = Vector3.RotateTowards(instance.transform.forward, direction, 2 * Mathf.PI, 0f);
-                instance.transform.rotation = Quaternion.LookRotation(new Vector3(rotation.x,0,rotation.z));
-                
-                
-                
+                instance.transform.rotation = Quaternion.LookRotation(new Vector3(rotation.x,0,rotation.z));   
             }
 
             //instance.transform.eulerAngles= new Vector3(instance.initialRotation.x, instance.initialRotation.y, instance.initialRotation.z);
@@ -148,26 +157,25 @@ public class BallLauncher : MonoBehaviour
 
             if (Physics.Raycast(instance.transform.position, instance.transform.forward, out RaycastHit hitInfo, 100, LayerMask.GetMask("Border")))
             {
-                instance.lineRenderer.SetPosition(0, instance.transform.position + Vector3.up);
+                instance.lineRenderer.SetPosition(0, instance.transform.position );
 
-                instance.lineRenderer.SetPosition(1, hitInfo.point + Vector3.up);
+                instance.lineRenderer.SetPosition(1, hitInfo.point );
                 instance.lineRenderer.positionCount = 3;
                 Vector3 reflectVec = Vector3.Reflect(hitInfo.point + instance.transform.forward * 100, hitInfo.normal);
-                instance.lineRenderer.SetPosition(2, reflectVec + Vector3.up);
+                instance.lineRenderer.SetPosition(2, reflectVec);
             }
             else
             {
                 instance.lineRenderer.positionCount = 2;
-                instance.lineRenderer.SetPosition(1, instance.transform.forward * 100 + Vector3.up);
+                instance.lineRenderer.SetPosition(1, instance.transform.position+instance.transform.forward * 100 );
             }
-
         }
     }
 
 
     public void IncreaseDamageDone(int dmg)
     {
-        damageDone += dmg;
+        bonusBalls += dmg * bonusBallPerDamageDealt;
     }
 
     public void AddBall(BallBehaviour ball)

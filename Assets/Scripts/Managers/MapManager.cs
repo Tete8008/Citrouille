@@ -14,16 +14,21 @@ public class MapManager : MonoBehaviour
     public GameObject obstaclePrefab;
 
     //Variables
-    private GameObject map;
-    [System.NonSerialized]public Camera cam;
+    //private GameObject map;
+    [HideInInspector] public Camera cam;
     private List<TowerBehaviour> towers;
     private List<Obstacle> obstacles;
+    /*
     private BallLauncher ballLauncher;
     private GameObject ground;
     private GameObject rightBorder;
     private GameObject leftBorder;
     private GameObject topBorder;
-    private GameObject bottomBorder;
+    private GameObject bottomBorder;*/
+
+    public List<GameObject> chunkPrefabs;
+
+    public float gridScale;
 
     private void Awake()
     {
@@ -39,6 +44,38 @@ public class MapManager : MonoBehaviour
 
     public static void GenerateMap(MapProperties mapProperties)
     {
+        if (instance.chunkPrefabs.Count == 0) { Debug.LogWarning("no chunk prefab referenced");return; }
+
+        MapGrid.instance.ground.transform.localScale *= instance.gridScale;
+        instance.cam = MapGrid.instance.cam;
+        instance.towers = new List<TowerBehaviour>();
+        instance.obstacles = new List<Obstacle>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 2; j < 7; j++)
+            {
+                Chunk chunk = Instantiate(instance.chunkPrefabs[Random.Range(0, instance.chunkPrefabs.Count)]).GetComponent<Chunk>() ;
+                chunk.self.position = new Vector3(instance.gridScale * i*10+5, 0, instance.gridScale * j*10);
+                chunk.groundPreview.SetActive(false);
+                for (int k=0;k< chunk.towersParent.childCount; k++)
+                {
+                    TowerBehaviour tower = chunk.towersParent.GetChild(k).gameObject.GetComponent<TowerBehaviour>();
+                    tower.Init(tower.towerProperties);
+                    instance.towers.Add(tower);
+                }
+
+                for (int k = 0; k < chunk.obstaclesParent.childCount; k++)
+                {
+                    Obstacle obstacle = chunk.obstaclesParent.GetChild(k).GetComponent<Obstacle>();
+                    obstacle.Init(obstacle.obstacleProperties);
+                    instance.obstacles.Add(obstacle);
+                }
+            }
+        }
+
+
+        /*
         instance.map = new GameObject();
         instance.map.name = "Map";
         GameObject cameraObject = new GameObject();
@@ -94,9 +131,16 @@ public class MapManager : MonoBehaviour
         instance.rightBorder.transform.rotation = mapProperties.borderRotations[0];
         instance.leftBorder.transform.rotation = mapProperties.borderRotations[1];
         instance.topBorder.transform.rotation = mapProperties.borderRotations[2];
-        instance.bottomBorder.transform.rotation = mapProperties.borderRotations[3];
-
-
-
+        instance.bottomBorder.transform.rotation = mapProperties.borderRotations[3];*/
     }
+
+    public void RemoveTower(TowerBehaviour tower)
+    {
+        towers.Remove(tower);
+        if (towers.Count == 0)
+        {
+            Debug.Log("YOU WIN");
+        }
+    }
+
 }

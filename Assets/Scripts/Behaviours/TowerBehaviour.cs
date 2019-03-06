@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [HideInInspector] public TowerProperties towerProperties;
+    public TowerProperties towerProperties;
     public Transform self;
     public ParticleSystem towerDestructionSFX;
 
@@ -23,6 +23,11 @@ public class TowerBehaviour : MonoBehaviour
 
     public void Init(TowerProperties towerProperties)
     {
+        for (int i = 0; i < self.childCount; i++)
+        {
+            Destroy(self.GetChild(i).gameObject);
+        }
+
         this.towerProperties = towerProperties;
         self = transform;
         blocs = new List<TowerBloc>();
@@ -30,9 +35,9 @@ public class TowerBehaviour : MonoBehaviour
         for (int i = 0; i < towerProperties.blocCount; i++)
         {
             blocs.Add(Instantiate(towerBlocPrefab, self).GetComponent<TowerBloc>());
-            blocs[i].transform.position = new Vector3(0,i*towerBlocPrefab.transform.localScale.y,0);
+            blocs[i].transform.localPosition = new Vector3(0,i*towerBlocPrefab.transform.localScale.y,0);
             blocs[i].Init(towerProperties.blocPattern[i%towerProperties.blocPattern.Count],this,i,currentHeight);
-            currentHeight += blocs[i].meshFilter.mesh.bounds.size.y*blocs[i].self.localScale.y;
+            currentHeight += blocs[i].meshFilter.sharedMesh.bounds.size.y*blocs[i].self.localScale.y;
         }
         switch (towerProperties.towerStructure)
         {
@@ -75,6 +80,7 @@ public class TowerBehaviour : MonoBehaviour
         towerDestructionSFX.Play();
         
         yield return new WaitForSeconds(0.5f);
+        MapManager.instance.RemoveTower(this);
         Destroy(gameObject);   
     }
 
