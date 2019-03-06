@@ -13,7 +13,7 @@ public class BallBehaviour : MonoBehaviour
 
     private float timeLeftToLive;
 
-    [System.NonSerialized] public bool overPowered=false;
+    public bool overPowered=false;
 
     private void Start()
     {

@@ -17,9 +17,10 @@ public class TowerBloc : MonoBehaviour
     [System.NonSerialized] public TowerBehaviour tower;
     [System.NonSerialized] public int blocIndex;
     [System.NonSerialized] public bool invincible;
+    [System.NonSerialized] public float blocHeight;
 
 
-    public void Init(BlocProperties blocProperties,TowerBehaviour tower,int index)
+    public void Init(BlocProperties blocProperties,TowerBehaviour tower,int index,float height)
     {
         meshFilter.mesh = blocProperties.mesh;
         meshRenderer.material = blocProperties.material;
@@ -31,6 +32,7 @@ public class TowerBloc : MonoBehaviour
         this.tower = tower;
         this.blocProperties = blocProperties;
         blocIndex = index;
+        blocHeight = height;
     }
 
     private void TakeDamage(int value)
@@ -40,7 +42,7 @@ public class TowerBloc : MonoBehaviour
         int damageLeft = Mathf.Abs(currentHealth);
         if (damageLeft > 0)
         {
-            if (tower.GetBlocCount()<blocIndex+1)
+            if (tower.GetBlocCount()>blocIndex+1)
             {
                 tower.GetBlocAtIndex(blocIndex + 1).TakeDamage(damageLeft);
             }
@@ -69,8 +71,24 @@ public class TowerBloc : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ball") && !invincible)
         {
-            print(blocProperties.blocEffect);
             BallBehaviour ball = collision.collider.GetComponentInParent<BallBehaviour>();
+
+
+            int damage;
+            if (ball.overPowered)
+            {
+                damage = ball.poweredDamage;
+            }
+            else
+            {
+                damage = ball.ballDamage;
+            }
+
+            //velocity correction
+            ball.rigid.velocity = new Vector3(ball.rigid.velocity.x, 0, ball.rigid.velocity.z);
+
+            TakeDamage(damage);
+
             switch (blocProperties.blocEffect)
             {
                 case BlocEffect.None:
@@ -86,20 +104,6 @@ public class TowerBloc : MonoBehaviour
                     ball.resistance = ball.ironResistance;
                     break;
             }
-            
-            int damage;
-            if (ball.overPowered) {
-                damage = ball.poweredDamage;
-            }
-            else
-            {
-                damage = ball.ballDamage;
-            }
-
-            //velocity correction
-            ball.rigid.velocity = new Vector3(ball.rigid.velocity.x, 0, ball.rigid.velocity.z);
-
-            TakeDamage(damage);
         }
     }
 

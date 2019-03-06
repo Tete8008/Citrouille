@@ -26,11 +26,13 @@ public class TowerBehaviour : MonoBehaviour
         this.towerProperties = towerProperties;
         self = transform;
         blocs = new List<TowerBloc>();
+        float currentHeight=0;
         for (int i = 0; i < towerProperties.blocCount; i++)
         {
             blocs.Add(Instantiate(towerBlocPrefab, self).GetComponent<TowerBloc>());
             blocs[i].transform.position = new Vector3(0,i*towerBlocPrefab.transform.localScale.y,0);
-            blocs[i].Init(towerProperties.blocPattern[i%towerProperties.blocPattern.Count],this,i);
+            blocs[i].Init(towerProperties.blocPattern[i%towerProperties.blocPattern.Count],this,i,currentHeight);
+            currentHeight += blocs[i].meshFilter.mesh.bounds.size.y*blocs[i].self.localScale.y;
         }
         switch (towerProperties.towerStructure)
         {
@@ -58,7 +60,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         blocs.Remove(towerBloc);
         falling = true;
-        heightToRemove = towerBloc.meshFilter.mesh.bounds.size.y * towerBloc.self.localScale.y;
+        heightToRemove += towerBloc.meshFilter.mesh.bounds.size.y * towerBloc.self.localScale.y;
         timeLeftInAir = fallDuration;
         if (blocs.Count == 0)
         {
@@ -85,25 +87,23 @@ public class TowerBehaviour : MonoBehaviour
         timeLeftInAir -= Time.deltaTime;
         if (timeLeftInAir > 0)
         {
-            float percent = 1-Mathf.InverseLerp(0, fallDuration, timeLeftInAir);
+            float percent =1-timeLeftInAir/fallDuration;
+
             for (int i = 0; i < blocs.Count; i++)
             {
-                if (blocs[i].blocIndex > 0)
-                {
-                    blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y+(blocs[i].blocIndex - percent) * heightToRemove, blocs[i].self.position.z);
-                }
+                blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y+ blocs[i].blocHeight - ( heightToRemove*percent), blocs[i].self.position.z);
             }
         }
         else
         {
+            float currentHeight = 0;
             for (int i = 0; i < blocs.Count; i++)
             {
-                if (blocs[i].blocIndex > 0)
-                {
-                    blocs[i].blocIndex--;
-                    blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y +blocs[i].blocIndex * heightToRemove, blocs[i].self.position.z);
-                }
+                blocs[i].blocHeight = currentHeight;
+                blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y +blocs[i].blocHeight, blocs[i].self.position.z);
+                currentHeight += blocs[i].meshFilter.mesh.bounds.size.y * blocs[i].transform.localScale.y;
             }
+            heightToRemove = 0;
             falling = false;
             ToggleBlocsInvincibility(false);
         }
@@ -122,7 +122,6 @@ public class TowerBehaviour : MonoBehaviour
 
     public TowerBloc GetBlocAtIndex(int index)
     {
-        print(index);
         return blocs[index];
     }
 

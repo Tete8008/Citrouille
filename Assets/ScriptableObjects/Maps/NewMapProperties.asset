@@ -17,7 +17,7 @@ MonoBehaviour:
     position: {x: 0, y: 0.39, z: 6.14}
     rotation: {x: -0, y: -0, z: -0, w: 1}
   - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
-    position: {x: -3.12, y: 0.39, z: 7.89}
+    position: {x: -3.09, y: 0.39, z: 7}
     rotation: {x: -0, y: -0, z: -0, w: 1}
   - towerProperties: {fileID: 11400000, guid: 06d26abb978dd01499ff69a26f65fbb4, type: 2}
     position: {x: 0.48, y: 0.4, z: 10.55}
