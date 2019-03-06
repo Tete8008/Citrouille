@@ -139,6 +139,9 @@ MonoBehaviour:
   rigid: {fileID: 6837403281067146393}
   ballDamage: 1
   resistance: 5
+  timeToLive: 10
+  poweredDamage: 2
+  ironResistance: 5
 --- !u!54 &6837403281067146393
 Rigidbody:
   m_ObjectHideFlags: 0

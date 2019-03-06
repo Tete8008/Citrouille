@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cb02d5a627e52745801b9d75fc5c5e1, type: 3}
-  m_Name: NewBlocProperties 2
+  m_Name: IronBloc
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
-  material: {fileID: 0}
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: 8a58c6746a60ef9428ee799776a88bac, type: 2}
+  blocEffect: 3

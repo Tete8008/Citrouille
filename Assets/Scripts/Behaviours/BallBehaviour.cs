@@ -22,7 +22,7 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Border") || collision.collider.CompareTag("TowerBloc"))
+        if (collision.collider.CompareTag("Border") || collision.collider.CompareTag("TowerBloc") || collision.collider.CompareTag("Obstacle"))
         {
             resistance--;
             if (resistance <= 0)

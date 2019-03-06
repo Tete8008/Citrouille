@@ -14,20 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towers:
   - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
-    position: {x: 0, y: 0, z: 6.14}
+    position: {x: 0, y: 0.39, z: 6.14}
     rotation: {x: -0, y: -0, z: -0, w: 1}
   - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
-    position: {x: -3.12, y: 0, z: 7.89}
+    position: {x: -3.12, y: 0.39, z: 7.89}
     rotation: {x: -0, y: -0, z: -0, w: 1}
-  - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
-    position: {x: 0.99, y: 0, z: 10.17}
-    rotation: {x: -0, y: -0, z: -0, w: 1}
-  - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
-    position: {x: 0.99, y: 0, z: 10.17}
+  - towerProperties: {fileID: 11400000, guid: 06d26abb978dd01499ff69a26f65fbb4, type: 2}
+    position: {x: 0.48, y: 0.4, z: 10.55}
     rotation: {x: -0, y: -0, z: -0, w: 1}
   cameraPosition: {x: 0, y: 12.72, z: -0.58}
   cameraRotation: {x: 0.5287965, y: -0, z: -0, w: 0.8487486}
-  launcherPosition: {x: 0, y: 0.98, z: 0}
+  launcherPosition: {x: 0, y: 0.524, z: 0}
   launcherRotation: {x: 0, y: 0, z: 0, w: 1}
   groundPosition: {x: 0, y: 0, z: 4.03}
   groundRotation: {x: 0, y: 0, z: 0, w: 1}

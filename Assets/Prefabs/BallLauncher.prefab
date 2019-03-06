@@ -173,7 +173,7 @@ MonoBehaviour:
     type: 3}
   maxAngle: 120
   bonusDecreaseRate: 0.5
-  ballsPerSalve: 20
+  ballsPerSalve: 1
   bonusBallPerDamageDealt: 0.2
   spawnPoint: {fileID: 2652851063753129729}
   lineRenderer: {fileID: 5871579319427483074}

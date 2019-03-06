@@ -52,7 +52,7 @@ MonoBehaviour:
   towerBlocPrefab: {fileID: 1806972134294974090, guid: ff6c6746321c34c41a355fddae796480,
     type: 3}
   capsuleCollider: {fileID: 2724484873257970952}
-  fallDuration: 0.05
+  fallDuration: 0.2
 --- !u!199 &5544978814767127541
 ParticleSystemRenderer:
   serializedVersion: 6

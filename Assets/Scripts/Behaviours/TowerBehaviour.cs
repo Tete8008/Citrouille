@@ -19,6 +19,7 @@ public class TowerBehaviour : MonoBehaviour
 
     private bool falling = false;
     private float timeLeftInAir;
+    private float heightToRemove;
 
     public void Init(TowerProperties towerProperties)
     {
@@ -57,6 +58,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         blocs.Remove(towerBloc);
         falling = true;
+        heightToRemove = towerBloc.meshFilter.mesh.bounds.size.y * towerBloc.self.localScale.y;
         timeLeftInAir = fallDuration;
         if (blocs.Count == 0)
         {
@@ -86,14 +88,21 @@ public class TowerBehaviour : MonoBehaviour
             float percent = 1-Mathf.InverseLerp(0, fallDuration, timeLeftInAir);
             for (int i = 0; i < blocs.Count; i++)
             {
-                blocs[i].self.position = new Vector3(blocs[i].self.position.x, (blocs[i].blocIndex - percent)* blocs[i].self.localScale.y, blocs[i].self.position.z);
+                if (blocs[i].blocIndex > 0)
+                {
+                    blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y+(blocs[i].blocIndex - percent) * heightToRemove, blocs[i].self.position.z);
+                }
             }
         }
         else
         {
             for (int i = 0; i < blocs.Count; i++)
             {
-                blocs[i].self.position = new Vector3(blocs[i].self.position.x, --blocs[i].blocIndex*blocs[i].self.localScale.y, blocs[i].self.position.z);
+                if (blocs[i].blocIndex > 0)
+                {
+                    blocs[i].blocIndex--;
+                    blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y +blocs[i].blocIndex * heightToRemove, blocs[i].self.position.z);
+                }
             }
             falling = false;
             ToggleBlocsInvincibility(false);
@@ -113,7 +122,14 @@ public class TowerBehaviour : MonoBehaviour
 
     public TowerBloc GetBlocAtIndex(int index)
     {
+        print(index);
         return blocs[index];
+    }
+
+
+    public int GetBlocCount()
+    {
+        return blocs.Count;
     }
 
 }

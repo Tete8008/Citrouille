@@ -10,6 +10,7 @@ public class TowerBloc : MonoBehaviour
     public ParticleSystem blocDestructionSFX;
     private int currentHealth;
     public Transform self;
+    public int ballMultiplierCount;
 
     private BlocProperties blocProperties;
 
@@ -34,16 +35,19 @@ public class TowerBloc : MonoBehaviour
 
     private void TakeDamage(int value)
     {
+        //print("damage : " + value);
         currentHealth -= value;
         int damageLeft = Mathf.Abs(currentHealth);
         if (damageLeft > 0)
         {
-            tower.GetBlocAtIndex(blocIndex - 1).TakeDamage(damageLeft);
+            if (tower.GetBlocCount()<blocIndex+1)
+            {
+                tower.GetBlocAtIndex(blocIndex + 1).TakeDamage(damageLeft);
+            }
         }
         BallLauncher.instance.IncreaseDamageDone(value);
         if (currentHealth <= 0)
         {
-            Debug.Log("Bloc destroyed");
             StartCoroutine(Die());
         }
     }
@@ -55,7 +59,7 @@ public class TowerBloc : MonoBehaviour
         meshRenderer.enabled = false;
         meshCollider.enabled = false;
         tower.ToggleBlocsInvincibility(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         tower.RemoveBloc(this);
         Destroy(gameObject); 
     }
@@ -65,6 +69,7 @@ public class TowerBloc : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ball") && !invincible)
         {
+            print(blocProperties.blocEffect);
             BallBehaviour ball = collision.collider.GetComponentInParent<BallBehaviour>();
             switch (blocProperties.blocEffect)
             {
@@ -72,7 +77,7 @@ public class TowerBloc : MonoBehaviour
                     //do nothing LUL
                     break;
                 case BlocEffect.BallMultiplier:
-                    SpawnBallWithRandomDirection();
+                    SpawnBallWithRandomDirection(collision.contacts[0].point);
                     break;
                 case BlocEffect.PowerBall:
                     ball.overPowered = true;
@@ -98,12 +103,18 @@ public class TowerBloc : MonoBehaviour
         }
     }
 
-    private void SpawnBallWithRandomDirection()
+    private void SpawnBallWithRandomDirection(Vector3 pos)
     {
-        BallBehaviour ball = Instantiate(BallLauncher.instance.ballPrefab).GetComponent<BallBehaviour>();
-        float angle = Random.Range(0, 2 * Mathf.PI);
-        ball.rigid.velocity = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle))*BallLauncher.instance.ballVelocity;
-        BallLauncher.instance.AddBall(ball);
+        
+        for (int i = 0; i < ballMultiplierCount; i++)
+        {
+            BallBehaviour ball = Instantiate(BallLauncher.instance.ballPrefab).GetComponent<BallBehaviour>();
+            ball.transform.position = pos;
+            float angle = Random.Range(0, 2 * Mathf.PI);
+            ball.rigid.velocity = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * BallLauncher.instance.ballVelocity;
+            BallLauncher.instance.AddBall(ball);
+        }
+        
 
     }
 

@@ -111,6 +111,7 @@ MonoBehaviour:
   meshCollider: {fileID: 6694471328940118523}
   blocDestructionSFX: {fileID: 2192175627189751410}
   self: {fileID: 6158049508021179632}
+  ballMultiplierCount: 3
 --- !u!199 &9069812934936280669
 ParticleSystemRenderer:
   serializedVersion: 6
