@@ -51,3 +51,5 @@ MonoBehaviour:
     type: 3}
   borderPrefab: {fileID: 8919904995883305668, guid: 8536793feaa502a4387956b34ad66b67,
     type: 3}
+  obstaclePrefab: {fileID: 2060501891636385188, guid: f8ddebda248c86249b64ff4eb7affca9,
+    type: 3}

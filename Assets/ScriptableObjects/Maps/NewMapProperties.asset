@@ -22,15 +22,18 @@ MonoBehaviour:
   - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
     position: {x: 0.99, y: 0, z: 10.17}
     rotation: {x: -0, y: -0, z: -0, w: 1}
+  - towerProperties: {fileID: 11400000, guid: f86f97d4266d64e438bb7f5c1e2b9aea, type: 2}
+    position: {x: 0.99, y: 0, z: 10.17}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
   cameraPosition: {x: 0, y: 12.72, z: -0.58}
   cameraRotation: {x: 0.5287965, y: -0, z: -0, w: 0.8487486}
   launcherPosition: {x: 0, y: 0.98, z: 0}
   launcherRotation: {x: 0, y: 0, z: 0, w: 1}
-  groundPosition: {x: 0, y: 0, z: 0}
+  groundPosition: {x: 0, y: 0, z: 4.03}
   groundRotation: {x: 0, y: 0, z: 0, w: 1}
   borderPositions:
   - {x: 5.23, y: 2.23, z: 7.11}
-  - {x: -7.75, y: 1.92, z: 4.37}
+  - {x: -5.85, y: 1.92, z: 4.37}
   - {x: -0, y: 1.92, z: 14.28}
   - {x: 0.05, y: 1.89, z: -3.78}
   borderRotations:
@@ -38,5 +41,12 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0, w: 1}
   - {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   - {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  levelWidth: 0
-  levelDepth: 0
+  obstacles:
+  - obstacleProperties: {fileID: 11400000, guid: da02d752b509c204eae5d6354d996798,
+      type: 2}
+    position: {x: 2.24, y: 0.56, z: 5.6}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+  - obstacleProperties: {fileID: 11400000, guid: b59ea3e9227bb834ea7196eeeaff0e85,
+      type: 2}
+    position: {x: -2.09, y: 0.78, z: 5.47}
+    rotation: {x: -0, y: -0, z: -0, w: 1}

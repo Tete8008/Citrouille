@@ -169,4 +169,10 @@ public class BallLauncher : MonoBehaviour
     {
         damageDone += dmg;
     }
+
+    public void AddBall(BallBehaviour ball)
+    {
+        balls.Add(ball);
+    }
+
 }

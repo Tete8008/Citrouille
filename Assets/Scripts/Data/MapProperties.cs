@@ -15,6 +15,5 @@ public class MapProperties : ScriptableObject
     public Quaternion groundRotation;
     public List<Vector3> borderPositions;
     public List<Quaternion> borderRotations;
-    public float levelWidth;
-    public float levelDepth;
+    public List<ObstacleData> obstacles;
 }

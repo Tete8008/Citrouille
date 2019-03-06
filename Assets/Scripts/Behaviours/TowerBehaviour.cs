@@ -108,6 +108,12 @@ public class TowerBehaviour : MonoBehaviour
             blocs[i].invincible = on;
         }
         capsuleCollider.enabled = on;
-
     }
+
+
+    public TowerBloc GetBlocAtIndex(int index)
+    {
+        return blocs[index];
+    }
+
 }

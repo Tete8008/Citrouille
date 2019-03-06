@@ -6,14 +6,18 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance = null;
 
+    //Prefabs
     public GameObject towerPrefab;
     public GameObject ballLauncherPrefab;
     public GameObject groundPrefab;
     public GameObject borderPrefab;
+    public GameObject obstaclePrefab;
+
+    //Variables
     private GameObject map;
     [System.NonSerialized]public Camera cam;
-
     private List<TowerBehaviour> towers;
+    private List<Obstacle> obstacles;
     private BallLauncher ballLauncher;
     private GameObject ground;
     private GameObject rightBorder;
@@ -55,7 +59,20 @@ public class MapManager : MonoBehaviour
                 TowerBehaviour towerBehaviour = towerObject.GetComponent<TowerBehaviour>();
                 towerBehaviour.Init(mapProperties.towers[i].towerProperties);
                 towerBehaviour.self.position = mapProperties.towers[i].position;
+                towerBehaviour.self.rotation = mapProperties.towers[i].rotation;
                 instance.towers.Add(towerBehaviour);
+            }
+
+            instance.obstacles = new List<Obstacle>();
+            for (int i = 0; i < mapProperties.obstacles.Count; i++)
+            {
+                GameObject obstacleObject = Instantiate(instance.obstaclePrefab);
+                obstacleObject.name = "Obstacle" + i;
+                Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
+                obstacle.Init(mapProperties.obstacles[i].obstacleProperties);
+                obstacle.self.position = mapProperties.obstacles[i].position;
+                obstacle.self.rotation = mapProperties.obstacles[i].rotation;
+                instance.obstacles.Add(obstacle);
             }
         }
         instance.ballLauncher=Instantiate(instance.ballLauncherPrefab).GetComponent<BallLauncher>();
@@ -78,5 +95,8 @@ public class MapManager : MonoBehaviour
         instance.leftBorder.transform.rotation = mapProperties.borderRotations[1];
         instance.topBorder.transform.rotation = mapProperties.borderRotations[2];
         instance.bottomBorder.transform.rotation = mapProperties.borderRotations[3];
+
+
+
     }
 }

@@ -8,8 +8,12 @@ public class BallBehaviour : MonoBehaviour
     public int ballDamage=1;
     public int resistance = 3;
     public float timeToLive = 10f;
+    public int poweredDamage;
+    public int ironResistance;
 
     private float timeLeftToLive;
+
+    [System.NonSerialized] public bool overPowered=false;
 
     private void Start()
     {

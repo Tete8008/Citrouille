@@ -7,15 +7,19 @@ public class MapGenerator : EditorWindow
 {
     private MapProperties mapProperties;
 
-    private GameObject map;
+    private GameObject towersParent;
+    private GameObject obstaclesParent;
 
     private TowerProperties selectedTowerProperties;
+    private ObstacleProperties selectedObstacleProperties;
 
     private GameObject towerPrefab;
     private GameObject launcherPrefab;
 
     private List<TowerBehaviour> towerPreviews;
-    private int previewsCount;
+    private List<Obstacle> obstaclePreviews;
+    private int towerPreviewsCount;
+    private int obstaclePreviewsCount;
 
     private RenderTexture renderTexture;
     private Camera camera;
@@ -32,6 +36,8 @@ public class MapGenerator : EditorWindow
 
     private GameObject borderPrefab;
 
+    private GameObject obstaclePrefab;
+
     [MenuItem("Citrouille/MapGenerator")]
     static void Init()
     {
@@ -47,18 +53,20 @@ public class MapGenerator : EditorWindow
         towerPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/TowerPrefab.prefab", typeof(GameObject)) as GameObject;
         groundPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/GroundPrefab.prefab", typeof(GameObject)) as GameObject;
         borderPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Border.prefab", typeof(GameObject)) as GameObject;
+        obstaclePrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Obstacle.prefab", typeof(GameObject)) as GameObject;
 
         if (launcherPrefab == null) { Debug.LogWarning("Launcher prefab not found"); }
         if (towerPrefab == null) { Debug.LogWarning("Tower prefab not found"); }
         if (groundPrefab == null) { Debug.LogWarning("Ground prefab not found"); }
         if (borderPrefab == null) { Debug.LogWarning("Border prefab not found"); }
+        if (obstaclePrefab == null) { Debug.LogWarning("Obstacle prefab not found"); }
     }
 
     
 
     private void OnDisable()
     {
-        DestroyImmediate(map);
+        DestroyImmediate(towersParent);
         DestroyImmediate(camera.gameObject);
         DestroyImmediate(ballLauncher.gameObject);
         DestroyImmediate(ground);
@@ -66,6 +74,8 @@ public class MapGenerator : EditorWindow
         DestroyImmediate(leftBorder);
         DestroyImmediate(topBorder);
         DestroyImmediate(bottomBorder);
+        DestroyImmediate(obstaclesParent);
+        
     }
 
 
@@ -76,28 +86,28 @@ public class MapGenerator : EditorWindow
         if (rightBorder == null)
         {
             rightBorder = Instantiate(borderPrefab);
-            rightBorder.name = "RightBorder";
+            rightBorder.name = "[Tool]RightBorder";
             rightBorder.transform.position = Vector3.zero;
         }
 
         if (leftBorder == null)
         {
             leftBorder = Instantiate(borderPrefab);
-            leftBorder.name = "LeftBorder";
+            leftBorder.name = "[Tool]LeftBorder";
             leftBorder.transform.position = Vector3.zero;
         }
 
         if (topBorder == null)
         {
             topBorder = Instantiate(borderPrefab);
-            topBorder.name = "TopBorder";
+            topBorder.name = "[Tool]TopBorder";
             topBorder.transform.position = Vector3.zero;
         }
 
         if (bottomBorder == null)
         {
             bottomBorder = Instantiate(borderPrefab);
-            bottomBorder.name = "BottomBorder";
+            bottomBorder.name = "[Tool]BottomBorder";
             bottomBorder.transform.position = Vector3.zero;
         }
 
@@ -110,21 +120,28 @@ public class MapGenerator : EditorWindow
         {
             ground = Instantiate(groundPrefab);
             ground.transform.position = Vector3.zero;
-            ground.name = "Ground";
+            ground.name = "[Tool]Ground";
         }
 
         if (ballLauncher == null)
         {
             ballLauncher = Instantiate(launcherPrefab);
             ballLauncher.transform.position = Vector3.zero;
-            ballLauncher.name = "BallLauncher";
+            ballLauncher.name = "[Tool]BallLauncher";
         }
 
-        if (map == null)
+        if (towersParent == null)
         {
-            map = new GameObject();
-            map.name = "Map";
-            map.transform.position = Vector3.zero;
+            towersParent = new GameObject();
+            towersParent.name = "[Tool]Towers";
+            towersParent.transform.position = Vector3.zero;
+        }
+
+        if (obstaclesParent == null)
+        {
+            obstaclesParent = new GameObject();
+            obstaclesParent.name = "[Tool]Obstacles";
+            obstaclesParent.transform.position = Vector3.zero;
         }
 
         if (camera == null)
@@ -133,17 +150,17 @@ public class MapGenerator : EditorWindow
             cameraObject.AddComponent<Camera>();
             camera = cameraObject.GetComponent<Camera>();
             camera.targetTexture = renderTexture;
-            camera.name = "CAMERA";
+            camera.name = "[Tool]Camera";
         }
 
         
 
-        if (towerPreviews==null || towerPreviews.Count != map.transform.childCount)
+        if (towerPreviews==null || towerPreviews.Count != towersParent.transform.childCount)
         {
             towerPreviews = new List<TowerBehaviour>();
-            for (int i = 0; i < map.transform.childCount; i++)
+            for (int i = 0; i < towersParent.transform.childCount; i++)
             {
-                towerPreviews.Add(map.transform.GetChild(i).GetComponent<TowerBehaviour>());
+                towerPreviews.Add(towersParent.transform.GetChild(i).GetComponent<TowerBehaviour>());
             }
         }
 
@@ -155,6 +172,26 @@ public class MapGenerator : EditorWindow
                 i--;
             }
         }
+
+        if (obstaclePreviews==null || obstaclePreviews.Count != obstaclesParent.transform.childCount)
+        {
+            obstaclePreviews = new List<Obstacle>();
+            for (int i = 0; i < obstaclesParent.transform.childCount; i++)
+            {
+                obstaclePreviews.Add(obstaclesParent.transform.GetChild(i).GetComponent<Obstacle>());
+            }
+        }
+
+
+        for (int i = 0; i < obstaclePreviews.Count; i++)
+        {
+            if (obstaclePreviews[i] == null)
+            {
+                obstaclePreviews.RemoveAt(i);
+                i--;
+            }
+        }
+
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("New Map"))
@@ -198,8 +235,7 @@ public class MapGenerator : EditorWindow
 
         if (GUILayout.Button("Add tower of this ← type ") && selectedTowerProperties!=null)
         {
-            GameObject towerObject = Instantiate(towerPrefab);
-            towerObject.transform.SetParent(map.transform);
+            GameObject towerObject = Instantiate(towerPrefab, towersParent.transform);
             towerObject.name = "Tower" + towerPreviews.Count;
             TowerBehaviour towerBehaviour = towerObject.GetComponent<TowerBehaviour>();
             towerBehaviour.Init(selectedTowerProperties);
@@ -208,15 +244,18 @@ public class MapGenerator : EditorWindow
             towerData.towerProperties = towerBehaviour.towerProperties;
             if (towerPreviews.Count > 0)
             {
-                Debug.Log(towerPreviews[towerPreviews.Count - 1]);
                 towerBehaviour.self.position = towerPreviews[towerPreviews.Count-1].self.position;
                 towerBehaviour.self.rotation = towerPreviews[towerPreviews.Count - 1].self.rotation;
+            }
+            else
+            {
+                towerBehaviour.self.localPosition = Vector3.zero;
             }
             towerData.position = towerBehaviour.self.position;
             towerData.rotation = towerBehaviour.self.rotation;
             mapProperties.towers.Add(towerData);
             towerPreviews.Add(towerBehaviour);
-            previewsCount++;
+            towerPreviewsCount++;
             Selection.activeObject = towerBehaviour;
         }
 
@@ -233,7 +272,52 @@ public class MapGenerator : EditorWindow
 
         EditorGUILayout.EndHorizontal();
 
+        EditorGUILayout.BeginHorizontal();
 
+        selectedObstacleProperties = EditorGUILayout.ObjectField(selectedObstacleProperties, typeof(ObstacleProperties), false) as ObstacleProperties;
+
+
+        
+
+        if (GUILayout.Button("Add obstacle of this ← type") && selectedObstacleProperties!=null)
+        {
+            GameObject obstacleObject = Instantiate(obstaclePrefab, obstaclesParent.transform);
+            
+            obstacleObject.name = "Obstacle" + obstaclePreviews.Count;
+            Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
+            obstacle.Init(selectedObstacleProperties);
+
+            ObstacleData obstacleData = new ObstacleData();
+            obstacleData.obstacleProperties = selectedObstacleProperties;
+            if (obstaclePreviews.Count > 0)
+            {
+                obstacle.self.position = obstaclePreviews[obstaclePreviews.Count - 1].self.position;
+                obstacle.self.rotation = obstaclePreviews[obstaclePreviews.Count - 1].self.rotation;
+            }
+            else
+            {
+                obstacle.self.localPosition = Vector3.zero;
+            }
+            
+
+            obstacleData.position = obstacle.self.position;
+            obstacleData.rotation = obstacle.self.rotation;
+            mapProperties.obstacles.Add(obstacleData);
+            obstaclePreviews.Add(obstacle);
+            obstaclePreviewsCount++;
+            Selection.activeObject = obstacle;
+        }
+
+        if (Selection.activeGameObject != null)
+        {
+            Obstacle obstacle = (Selection.activeGameObject).GetComponent<Obstacle>();
+            if (obstacle != null && GUILayout.Button("Remove selected obstacle", EditorStyles.miniButton))
+            {
+                obstaclePreviews.Remove(obstacle);
+                DestroyImmediate(Selection.activeObject);
+            }
+        }
+        EditorGUILayout.EndHorizontal();
         //ça c'est pog ↓
         GUILayout.Box(new GUIContent(renderTexture),new GUIStyle { alignment=TextAnchor.MiddleCenter});
 
@@ -241,18 +325,6 @@ public class MapGenerator : EditorWindow
 
         if (GUILayout.Button("Save current map"))
         {
-            if (map == null)
-            {
-                Debug.LogWarning("Map not instantiated");
-                return;
-            }
-
-            if (mapProperties == null)
-            {
-                Debug.LogWarning("Map properties not referenced");
-                return;
-            }
-
             mapProperties.towers = new List<TowerData>();
             for (int i = 0; i < towerPreviews.Count; i++)
             {
@@ -261,6 +333,17 @@ public class MapGenerator : EditorWindow
                     position=towerPreviews[i].self.position,
                     rotation= towerPreviews[i].self.rotation,
                     towerProperties= towerPreviews[i].towerProperties
+                });
+            }
+
+            mapProperties.obstacles = new List<ObstacleData>();
+            for (int i = 0; i < obstaclePreviews.Count; i++)
+            {
+                mapProperties.obstacles.Add(new ObstacleData
+                {
+                    obstacleProperties = obstaclePreviews[i].obstacleProperties,
+                    position = obstaclePreviews[i].self.position,
+                    rotation = obstaclePreviews[i].self.rotation
                 });
             }
             mapProperties.cameraPosition = camera.transform.position;
@@ -303,9 +386,12 @@ public class MapGenerator : EditorWindow
 
     private void RefreshMap()
     {
-        DestroyImmediate(map);
-        map = new GameObject();
-        map.name = "Map";
+        DestroyImmediate(towersParent);
+        towersParent = new GameObject();
+        towersParent.name = "[Tool]Towers";
+        DestroyImmediate(obstaclesParent);
+        obstaclesParent = new GameObject();
+        obstaclesParent.name = "[Tool]Obstacles";
         DestroyImmediate(camera.gameObject);
         GameObject cameraObject = new GameObject();
         cameraObject.AddComponent<Camera>();
@@ -313,9 +399,10 @@ public class MapGenerator : EditorWindow
         cameraObject.transform.rotation = mapProperties.cameraRotation;
         camera = cameraObject.GetComponent<Camera>();
         camera.targetTexture = renderTexture;
-        camera.name = "CAMERA";
+        camera.name = "[Tool]Camera";
         DestroyImmediate(ballLauncher.gameObject);
         ballLauncher = Instantiate(launcherPrefab);
+        ballLauncher.name = "[Tool]BallLauncher";
         ballLauncher.transform.position = mapProperties.launcherPosition;
         ballLauncher.transform.rotation = mapProperties.launcherRotation;
         ground.transform.position = mapProperties.groundPosition;
@@ -331,19 +418,32 @@ public class MapGenerator : EditorWindow
 
 
         towerPreviews = new List<TowerBehaviour>();
+        obstaclePreviews = new List<Obstacle>();
         if (mapProperties != null)
         {
             for (int i = 0; i < mapProperties.towers.Count; i++)
             {
-                GameObject towerObject = Instantiate(towerPrefab);
-                towerObject.transform.SetParent(map.transform);
+                GameObject towerObject = Instantiate(towerPrefab, towersParent.transform);
                 towerObject.name = "Tower" + i;
                 TowerBehaviour towerBehaviour = towerObject.GetComponent<TowerBehaviour>();
                 towerBehaviour.Init(mapProperties.towers[i].towerProperties);
                 towerBehaviour.self.position = mapProperties.towers[i].position;
                 towerPreviews.Add(towerBehaviour);
             }
+
+            for (int i = 0; i < mapProperties.obstacles.Count; i++)
+            {
+                GameObject obstacleObject = Instantiate(obstaclePrefab,obstaclesParent.transform);
+                obstacleObject.name = "Obstacle" + i;
+                Obstacle obstacle = obstacleObject.GetComponent<Obstacle>();
+                obstacle.Init(mapProperties.obstacles[i].obstacleProperties);
+                obstacle.self.position = mapProperties.obstacles[i].position;
+                obstacle.self.rotation = mapProperties.obstacles[i].rotation;
+            }
+
         }
+
+        
         
     }
 
