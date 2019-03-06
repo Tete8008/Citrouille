@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb02d5a627e52745801b9d75fc5c5e1, type: 3}
   m_Name: PowerBloc
   m_EditorClassIdentifier: 
-  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  material: {fileID: 2100000, guid: 12ce94fde5e5be54a8a27abce2546ee0, type: 2}
   blocEffect: 2
+  meshPrefab: {fileID: 3141380018994377288, guid: cece6cef0c13c144fa9c7128afd9bc14,
+    type: 3}

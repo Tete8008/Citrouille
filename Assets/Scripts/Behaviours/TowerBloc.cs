@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TowerBloc : MonoBehaviour
 {
-    public MeshFilter meshFilter;
-    public MeshRenderer meshRenderer;
-    public Collider meshCollider;
     public ParticleSystem blocDestructionSFX;
     private int currentHealth;
     public Transform self;
@@ -18,16 +15,14 @@ public class TowerBloc : MonoBehaviour
     [System.NonSerialized] public int blocIndex;
     [System.NonSerialized] public bool invincible;
     [System.NonSerialized] public float blocHeight;
+    [System.NonSerialized] public GameObject mesh;
 
 
     public void Init(BlocProperties blocProperties,TowerBehaviour tower,int index,float height)
     {
-        meshFilter.mesh = blocProperties.mesh;
-        meshRenderer.material = blocProperties.material;
-        if (typeof(MeshCollider) == meshCollider.GetType())
-        {
-            ((MeshCollider)meshCollider).sharedMesh = meshFilter.sharedMesh;
-        }
+        mesh=Instantiate(blocProperties.meshPrefab, self);
+        mesh.transform.localPosition = Vector3.zero;
+        mesh.GetComponent<MeshPrefab>().towerBloc = this;
         currentHealth = tower.towerProperties.healthPerBloc;
         this.tower = tower;
         this.blocProperties = blocProperties;
@@ -58,8 +53,7 @@ public class TowerBloc : MonoBehaviour
     private IEnumerator Die()
     {
         blocDestructionSFX.Play();
-        meshRenderer.enabled = false;
-        meshCollider.enabled = false;
+        Destroy(mesh);
         tower.ToggleBlocsInvincibility(true);
         yield return new WaitForSeconds(0.2f);
         tower.RemoveBloc(this);
@@ -67,12 +61,11 @@ public class TowerBloc : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    public void CollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Ball") && !invincible)
         {
             BallBehaviour ball = collision.collider.GetComponentInParent<BallBehaviour>();
-
 
             int damage;
             if (ball.overPowered)

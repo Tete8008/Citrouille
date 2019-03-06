@@ -37,7 +37,7 @@ public class TowerBehaviour : MonoBehaviour
             blocs.Add(Instantiate(towerBlocPrefab, self).GetComponent<TowerBloc>());
             blocs[i].transform.localPosition = new Vector3(0,i*towerBlocPrefab.transform.localScale.y,0);
             blocs[i].Init(towerProperties.blocPattern[i%towerProperties.blocPattern.Count],this,i,currentHeight);
-            currentHeight += blocs[i].meshFilter.sharedMesh.bounds.size.y*blocs[i].self.localScale.y;
+            currentHeight += blocs[i].mesh.GetComponent<MeshFilter>().sharedMesh.bounds.size.y*blocs[i].self.localScale.y;
         }
         switch (towerProperties.towerStructure)
         {
@@ -65,7 +65,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         blocs.Remove(towerBloc);
         falling = true;
-        heightToRemove += towerBloc.meshFilter.mesh.bounds.size.y * towerBloc.self.localScale.y;
+        heightToRemove += towerBloc.mesh.GetComponent<MeshFilter>().mesh.bounds.size.y * towerBloc.self.localScale.y;
         timeLeftInAir = fallDuration;
         if (blocs.Count == 0)
         {
@@ -107,7 +107,7 @@ public class TowerBehaviour : MonoBehaviour
             {
                 blocs[i].blocHeight = currentHeight;
                 blocs[i].self.position = new Vector3(blocs[i].self.position.x, blocs[i].tower.self.position.y +blocs[i].blocHeight, blocs[i].self.position.z);
-                currentHeight += blocs[i].meshFilter.mesh.bounds.size.y * blocs[i].transform.localScale.y;
+                currentHeight += blocs[i].mesh.GetComponent<MeshFilter>().mesh.bounds.size.y * blocs[i].transform.localScale.y;
             }
             heightToRemove = 0;
             falling = false;
