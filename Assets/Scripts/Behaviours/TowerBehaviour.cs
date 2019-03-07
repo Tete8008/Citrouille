@@ -17,6 +17,10 @@ public class TowerBehaviour : MonoBehaviour
 
     public float fallDuration;
 
+    [Header("At tower destruction")]
+    public int bonusPointsPerBloc;
+
+
     private bool falling = false;
     private float timeLeftInAir;
     private float heightToRemove;
@@ -37,7 +41,9 @@ public class TowerBehaviour : MonoBehaviour
             blocs.Add(Instantiate(towerBlocPrefab, self).GetComponent<TowerBloc>());
             blocs[i].transform.localPosition = new Vector3(0,i*towerBlocPrefab.transform.localScale.y,0);
             blocs[i].Init(towerProperties.blocPattern[i%towerProperties.blocPattern.Count],this,i,currentHeight);
-            currentHeight += blocs[i].mesh.GetComponent<MeshFilter>().sharedMesh.bounds.size.y*blocs[i].self.localScale.y;
+            currentHeight += blocs[i].mesh.GetComponent<Collider>().bounds.size.y*blocs[i].self.localScale.y;
+            print(blocs[i].mesh.GetComponent<Collider>().bounds.size.y);
+            print(currentHeight);
         }
         switch (towerProperties.towerStructure)
         {
@@ -65,7 +71,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         blocs.Remove(towerBloc);
         falling = true;
-        heightToRemove += towerBloc.mesh.GetComponent<MeshFilter>().mesh.bounds.size.y * towerBloc.self.localScale.y;
+        heightToRemove += towerBloc.mesh.GetComponent<Collider>().bounds.size.y * towerBloc.self.localScale.y;
         timeLeftInAir = fallDuration;
         if (blocs.Count == 0)
         {
@@ -78,7 +84,7 @@ public class TowerBehaviour : MonoBehaviour
     private IEnumerator Die()
     {
         towerDestructionSFX.Play();
-        
+        GameManager.instance.AddScore(towerProperties.blocCount * bonusPointsPerBloc);
         yield return new WaitForSeconds(0.5f);
         MapManager.instance.RemoveTower(this);
         Destroy(gameObject);   

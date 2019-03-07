@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: NewBlocProperties 1
   m_EditorClassIdentifier: 
   blocEffect: 0
-  meshPrefab: {fileID: 3141380018994377288, guid: cece6cef0c13c144fa9c7128afd9bc14,
+  meshPrefab: {fileID: 7370032236995735346, guid: 3c427fc251a57d443b5450eaeb398321,
     type: 3}
+  pointsGiven: 0

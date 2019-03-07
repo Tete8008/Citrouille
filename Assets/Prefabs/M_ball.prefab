@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4240290498551106892}
   - component: {fileID: 8814511981722532577}
   - component: {fileID: 1924073293576910995}
+  - component: {fileID: 2161847800223241229}
   m_Layer: 0
   m_Name: M_ball
   m_TagString: Untagged
@@ -91,3 +92,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerBloc: {fileID: 0}
+--- !u!135 &2161847800223241229
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3141380018994377288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.09369357
+  m_Center: {x: 0, y: 0, z: 0}

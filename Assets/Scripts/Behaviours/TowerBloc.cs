@@ -28,6 +28,7 @@ public class TowerBloc : MonoBehaviour
         this.blocProperties = blocProperties;
         blocIndex = index;
         blocHeight = height;
+        self.localPosition = new Vector3(0, height, 0);
     }
 
     private void TakeDamage(int value)
@@ -55,6 +56,7 @@ public class TowerBloc : MonoBehaviour
         blocDestructionSFX.Play();
         Destroy(mesh);
         tower.ToggleBlocsInvincibility(true);
+        GameManager.instance.AddScore(blocProperties.pointsGiven);
         yield return new WaitForSeconds(0.2f);
         tower.RemoveBloc(this);
         Destroy(gameObject); 

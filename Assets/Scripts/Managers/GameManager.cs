@@ -11,8 +11,11 @@ public class GameManager : MonoBehaviour
     public GameObject canvasPrefab;
     public GameObject mapManagerPrefab;
 
-    [Header("Map")]
-    public MapProperties mapProperties;
+
+    [NonSerialized] public long score;
+    [NonSerialized] public int level;
+        
+
 
 
 
@@ -33,6 +36,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
+    }
+
+    public void AddScore(int value)
+    {
+        score += value;
     }
 
 
@@ -71,7 +79,21 @@ public class GameManager : MonoBehaviour
         //si on charge le game <=> si on charge le jeu pour la première fois
         if (arg0.name == "Game")
         {
-            MapManager.GenerateMap(instance.mapProperties);
+            MapManager.GenerateMap();
         }
     }
+
+
+    public void WinLevel()
+    {
+        //uimanager.popWinPanel
+
+    }
+
+    public void LoseLevel()
+    {
+        //uiManager.popLosePanel
+    }
+
+
 }

@@ -16,6 +16,7 @@ public class BallLauncher : MonoBehaviour
     public float bonusBallPerDamageDealt;
 
     public Transform spawnPoint;
+    public int bonusPointsPerBallLeft;
 
     private float timeLeftBeforeNextShoot;
     private float timeLeftBeforeNextBonusDecrease;
@@ -73,6 +74,7 @@ public class BallLauncher : MonoBehaviour
         balls.Remove(ball);
         if (balls.Count <= 0 && outOfSalves)
         {
+            GameManager.instance.LoseLevel();
             Debug.Log("YOU LOSE");
         }
     }
@@ -181,6 +183,11 @@ public class BallLauncher : MonoBehaviour
     public void AddBall(BallBehaviour ball)
     {
         balls.Add(ball);
+    }
+
+    public int GetBonusPoints()
+    {
+        return ballsLeft * bonusPointsPerBallLeft;
     }
 
 }

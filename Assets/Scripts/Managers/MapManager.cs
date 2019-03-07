@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public static void GenerateMap(MapProperties mapProperties)
+    public static void GenerateMap()
     {
         if (instance.chunkPrefabs.Count == 0) { Debug.LogWarning("no chunk prefab referenced");return; }
 
@@ -139,6 +139,8 @@ public class MapManager : MonoBehaviour
         towers.Remove(tower);
         if (towers.Count == 0)
         {
+            GameManager.instance.AddScore(BallLauncher.instance.GetBonusPoints());
+            GameManager.instance.WinLevel();
             Debug.Log("YOU WIN");
         }
     }

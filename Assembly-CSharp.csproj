@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Data\MapProperties.cs" />
     <Compile Include="Assets\Scripts\Data\ObstacleData.cs" />
     <Compile Include="Assets\Scripts\Data\ObstacleProperties.cs" />
+    <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Data\TowerData.cs" />
     <Compile Include="Assets\Scripts\Data\TowerProperties.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />

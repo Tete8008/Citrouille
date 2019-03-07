@@ -9,5 +9,5 @@ public class BlocProperties : ScriptableObject
 {
     public BlocEffect blocEffect;
     public GameObject meshPrefab;
-
+    public int pointsGiven;
 }
